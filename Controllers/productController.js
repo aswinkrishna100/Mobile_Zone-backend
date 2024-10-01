@@ -76,8 +76,8 @@ exports.mobileCatogory = async(req,res)=>{
 exports.productView = async(req,res)=>{
     const {id} = req.params
     try{
-        const viewId = await products.findOne({_id:id})
-        res.status(200).json(viewId)
+        const Product = await products.findOne({_id:id})
+        res.status(200).json(Product)
     }
     catch(err){
         console.log(err);

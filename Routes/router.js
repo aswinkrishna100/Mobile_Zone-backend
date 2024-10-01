@@ -3,6 +3,8 @@ const router = new express.Router()
 const UserController = require('../Controllers/usercontroller')
 const ProductController = require('../Controllers/productController')
 const CartController = require('../Controllers/cartController')
+const OrderController = require('../Controllers/orderController')
+const DeleteController = require('../Controllers/deleteController')
 const jwtAuthorizathion = require('../middlewares/jwtMiddlewares')
 const multerconfig = require('../middlewares/multerMiddleware')
 
@@ -46,6 +48,22 @@ router.get('/get-cart/:id',jwtAuthorizathion,CartController.getcart)
 router.post('/delete-cart/:id',CartController.deletecart)
 
 // product view 
-router.post('/product-view/:id',ProductController.productView)
+router.get('/product-view/:id',ProductController.productView)
+
+// payment 
+router.post('/user/order/payment',OrderController.paymentController)
+
+// place orders 
+router.post('/user/place-orders/:id',OrderController.placeOrders)
+
+// get orders user
+router.get('/user/order-details/:id',OrderController.getOrders)
+
+// delete cart by placing orders
+router.delete('/delete-cart-orders/:id',DeleteController.deletecart)
+
+// get orders admin
+router.get('/admin/order-details',OrderController.getAdminOrders)
 
 module.exports = router
+ 
