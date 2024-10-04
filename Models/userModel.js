@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
     },
     address:{
         type:String,
-        required:true
     },
     email:{
         type:String,
@@ -20,7 +19,6 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
     },
     otp:{
         type:String
@@ -35,6 +33,9 @@ const userSchema = new mongoose.Schema({
     role:{
         type:Number,
         default:0
+    },
+    profile:{
+        type:String,
     }
 })
 

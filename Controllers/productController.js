@@ -84,3 +84,4 @@ exports.productView = async(req,res)=>{
         res.status(500).json("Internal Server Error")
     }
 }
+

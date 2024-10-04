@@ -23,6 +23,9 @@ router.post('/loginuser',UserController.loginUser)
 // get User
 router.get('/getuser',UserController.getUser) 
 
+// edit User
+router.put('/edituser/:id',multerconfig.single('profileImage'),UserController.editUser)
+
 // add product - admin
 router.post('/admin/add-product',jwtAuthorizathion,multerconfig.single('productImage'),ProductController.addProduct)
 
@@ -65,5 +68,19 @@ router.delete('/delete-cart-orders/:id',DeleteController.deletecart)
 // get orders admin
 router.get('/admin/order-details',OrderController.getAdminOrders)
 
+// reset password
+router.post('/reset/password',UserController.resetPassword)
+
+// get users to admin
+router.get('/user/details',UserController.getUsers)
+
+// set password
+router.post('/set/password',UserController.setPassword)
+
+// signIn with google
+router.post('/google/SignIn',UserController.googleSignIn)
+
+// payment slip
+router.post('/paymentSlip/download',OrderController.paymentSlip)
+
 module.exports = router
- 

@@ -1,5 +1,6 @@
 const Razorpay = require("razorpay")
 const orderProducts = require("../Models/orderModel")
+const PDFDocument = require('pdfkit')
 
 exports.paymentController = async(req,res)=>{
     const {amount} = req.body
@@ -71,4 +72,34 @@ exports.getAdminOrders = async(req,res)=>{
      res.status(500).json("Internal Server Error")
      console.log(err);
    }
+ }
+
+ exports.paymentSlip = async(req,res)=>{
+    const {payment_id} = req.body
+
+    const razorpay = new Razorpay({
+        key_id : process.env.KEY_ID,
+        key_secret : process.env.key_secret
+    })
+    try{        
+        const payment = await razorpay.payments.fetch(payment_id)
+        const doc = new PDFDocument()
+        res.setHeader('Content-Type','application/pdf')
+        res.setHeader('Content-Disposition',`attachment; filename=reciept=${payment_id}.pdf`)
+        doc.pipe(res)
+        doc.fontSize(20).text('Payment Reciept' , {align:'center'})
+        doc.moveDown();
+        doc.fontSize(12).text(`Payment ID: ${payment_id}`);
+        doc.text(`Order ID: ${payment.order_id}`);
+        doc.text(`Amount: ${payment.amount / 100}`); 
+        doc.text(`Status: ${payment.status}`);
+        doc.text(`Method: ${payment.method}`);
+        doc.text(`Email: ${payment.email}`);
+        doc.text(`Contact: ${payment.contact}`);
+        doc.end()
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json("Internal Server Error")
+    }
  }
