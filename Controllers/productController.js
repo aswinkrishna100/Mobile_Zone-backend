@@ -19,6 +19,10 @@ exports.addProduct = async(req,res)=>{
 
 exports.getProduct = async(req,res)=>{
     try{
+        // const searchkey = req.query.search
+        // const query = {
+        //     brand : { $regex: searchkey, $options:"i" }
+        // }
         const productDetails = await products.find()
         res.status(200).json(productDetails)
     }
@@ -85,3 +89,19 @@ exports.productView = async(req,res)=>{
     }
 }
 
+exports.productReviews = async(req,res)=>{
+    const {id} = req.params
+    const {review,username} = req.body
+
+    try{
+        const Products = await products.findOne({_id:id})
+        Products.reviews.push({review,username})
+        Products.save()
+        res.status(200).json(Products)
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json("Internal Server Error")   
+    }
+}
+  

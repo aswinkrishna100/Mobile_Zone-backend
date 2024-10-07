@@ -24,7 +24,19 @@ const ProductSchema = new mongoose.Schema({
     price:{
         type:Number,
         required:true
-    }
+    },
+    reviews : [
+        {
+            review:{
+                type:String,
+                required:true
+            },
+            username:{
+                type:String,
+                required:true
+            }
+        }
+    ]
 })
 
 const products = mongoose.model('products',ProductSchema)

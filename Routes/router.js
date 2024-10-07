@@ -30,7 +30,7 @@ router.put('/edituser/:id',multerconfig.single('profileImage'),UserController.ed
 router.post('/admin/add-product',jwtAuthorizathion,multerconfig.single('productImage'),ProductController.addProduct)
 
 // get product - admin
-router.get('/admin/get-product',jwtAuthorizathion,ProductController.getProduct)
+router.get('/admin/get-product',ProductController.getProduct)
 
 // edit product - admin
 router.put('/admin/edit-product/:id',jwtAuthorizathion,multerconfig.single('productImage'),ProductController.editProduct)
@@ -82,5 +82,8 @@ router.post('/google/SignIn',UserController.googleSignIn)
 
 // payment slip
 router.post('/paymentSlip/download',OrderController.paymentSlip)
+
+// add reviews
+router.post('/product/review/:id',ProductController.productReviews)
 
 module.exports = router
